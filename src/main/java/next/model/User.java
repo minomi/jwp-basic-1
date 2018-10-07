@@ -1,5 +1,8 @@
 package next.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class User {
     private String userId;
     private String password;
@@ -11,6 +14,21 @@ public class User {
         this.password = password;
         this.name = name;
         this.email = email;
+    }
+
+    public User(Object object) {
+        User user = (User) object;
+        this.userId = user.getUserId();
+        this.password = user.getPassword();
+        this.name = user.getName();
+        this.email = user.getEmail();
+    }
+
+    static public User from(ResultSet rs) throws SQLException {
+        return new User(rs.getString("userId"),
+                        rs.getString("password"),
+                        rs.getString("name"),
+                        rs.getString("email"));
     }
 
     public String getUserId() {
